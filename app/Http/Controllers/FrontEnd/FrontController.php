@@ -446,7 +446,7 @@ class FrontController extends Controller
     {
         $data1 = Transaction::with(['user'])->where('order_id', $order_id)->first();
 
-        $qrcode = base64_encode(QrCode::format('svg')->size(200)->errorCorrection('H')->generate('https://a9f2-2001-448a-70a3-224a-2d19-68b0-8ede-33c7.ngrok-free.app/show-ticket/' . $data1->order_id));
+        $qrcode = base64_encode(QrCode::format('svg')->size(200)->errorCorrection('H')->generate('https://e2a3-180-253-105-68.ngrok-free.app/show-ticket/' . $data1->order_id));
 
         $customPaper = array(0, 0, 720, 1440);
 

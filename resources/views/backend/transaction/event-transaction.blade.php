@@ -116,18 +116,18 @@
             }
 
             $('body').on('click', '#event-show', function() {
-                var event_id = $(this).attr('data-id');
-                console.log(event_id)
+                var slug = $(this).attr('data-id');
+                console.log(slug)
                 $.ajax({
                     type: "POST",
                     url: "{{ route('get.transaction.data') }}",
                     data: {
-                        event_id: event_id
+                        slug: slug
                     },
                     dataType: "JSON",
                     success: function(response) {
-                        console.log(response.event_id)
-                        window.open('/transactionShow/' + response.event_id);
+                        console.log(response)
+                        window.open('/transactionShow/' + slug);
                     }
                 });
             });

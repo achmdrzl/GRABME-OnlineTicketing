@@ -37,7 +37,7 @@ class PaymentController extends Controller
                 $data1 = Transaction::with(['user'])->where('order_id', $request->order_id)->first();
 
                 // generate qr code
-                $qrcode = base64_encode(QrCode::format('svg')->size(200)->errorCorrection('H')->generate('https://a9f2-2001-448a-70a3-224a-2d19-68b0-8ede-33c7.ngrok-free.app/show-ticket/'.$data1->order_id));
+                $qrcode = base64_encode(QrCode::format('svg')->size(200)->errorCorrection('H')->generate('https://e2a3-180-253-105-68.ngrok-free.app/show-ticket/' . $data1->order_id));
 
                 // custom paper
                 $customPaper = array(0, 0, 720, 1440);
@@ -52,10 +52,9 @@ class PaymentController extends Controller
                 // sending the email
                 Mail::send('frontend.order.etiket', $data, function ($message) use ($data, $pdf) {
                     $message->to($data["email"])
-                    ->subject("E-ticket")
-                    ->attachData($pdf->output(), "E-ticket.pdf");
+                        ->subject("E-ticket")
+                        ->attachData($pdf->output(), "E-ticket.pdf");
                 });
-
             } elseif ($request->transaction_status == 'pending') {
                 $transaction = Transaction::where('order_id', $request->order_id)->update([
                     'transaction_id' => $request->transaction_id,
@@ -69,7 +68,6 @@ class PaymentController extends Controller
                     'merchant_id' => isset($request->merchant_id) ? $request->merchant_id : null,
                     'signature_key' => isset($request->signature_key) ? $request->signature_key : null,
                     'reference_id' => isset($request->reference_id) ? $request->reference_id : null,
-                    'signature_key' => isset($request->signature_key) ? $request->signature_key : null,
                 ]);
             } else {
                 $transaction = Transaction::where('order_id', $request->order_id)->update([

@@ -30,6 +30,7 @@
                                     <th>Customer</th>
                                     <th>Internet Tax</th>
                                     <th>Total Payment</th>
+                                    <th>Total Ticket</th>
                                     <th>Status Payment</th>
                                     <th>Status Print</th>
                                     <th>Action</th>
@@ -100,7 +101,7 @@
             var table = $('#transaction-datatable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '/transactionShow/' + `{{ $id }}`,
+                ajax: '/transactionShow/' + `{{ $slug }}`,
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex'
@@ -124,6 +125,10 @@
                     {
                         data: 'total_payment',
                         name: 'total_payment'
+                    },
+                    {
+                        data: 'total_ticket',
+                        name: 'total_ticket'
                     },
                     {
                         data: 'status_payment',

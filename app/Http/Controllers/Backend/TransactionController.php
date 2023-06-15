@@ -154,7 +154,7 @@ class TransactionController extends Controller
                 })
                 ->addColumn('action', function ($event) {
 
-                    $btn = '<button id="event-show" data-id="' . $event->event_id . '" class="btn btn-primary btn-sm ms-1" title="Show"><i class="mdi mdi-eye"></i></button>';
+                    $btn = '<button id="event-show" data-id="' . $event->slug . '" class="btn btn-primary btn-sm ms-1" title="Show"><i class="mdi mdi-eye"></i></button>';
 
                     return $btn;
                 })
@@ -167,16 +167,18 @@ class TransactionController extends Controller
 
     public function transactionGetData(Request $request)
     {
-        $transaction = Transaction::with(['user', 'event', 'transaksiDetail.ticketCategory'])->where('event_id', $request->event_id)->first();
+        $data = Events::where('slug', $request->slug)->first();
+        $transaction = Transaction::with(['user', 'event', 'transaksiDetail.ticketCategory'])->where('event_id', $data->event_id)->first();
 
         return response()->json($transaction);
     }
 
-    public function transactionShow($id, Request $request)
+    public function transactionShow($slug, Request $request)
     {
+        $data = Events::where('slug', $slug)->first();
         if ($request->ajax()) {
+            $transaction = Transaction::with(['user', 'transaksiDetail.ticketCategory', 'event'])->where('event_id', $data->event_id)->where('status_payment', 'settlement')->get();
 
-            $transaction = Transaction::with(['user', 'transaksiDetail.ticketCategory', 'event'])->where('event_id', $id)->where('status_payment', 'settlement')->get();
             return DataTables::of($transaction)
                 ->addIndexColumn()
                 ->addColumn('order_id', function ($data) {
@@ -193,6 +195,9 @@ class TransactionController extends Controller
                 })
                 ->addColumn('total_payment', function ($data) {
                     return ' Rp.' . number_format($data->total_payment - $data->internet_tax);
+                })
+                ->addColumn('total_ticket', function ($data) {
+                    return number_format($data->transaksiDetail->sum('amount_ticket'));
                 })
                 ->addColumn('status_payment', function ($data) {
                     if ($data->status_payment == 'settlement') {
@@ -221,10 +226,10 @@ class TransactionController extends Controller
                 ->rawColumns(['status_cetak', 'status_payment', 'action'])
                 ->make(true);
         }
-        
-        $tax = Transaction::with(['user', 'transaksiDetail.ticketCategory', 'event'])->where('event_id', $id)->where('status_payment', 'settlement')->sum('internet_tax');
-        $total_payment = Transaction::with(['user', 'transaksiDetail.ticketCategory', 'event'])->where('event_id', $id)->where('status_payment', 'settlement')->sum('total_payment');
 
-        return view('backend.transaction.show-transaction', compact('id', 'total_payment', 'tax'));
+        $tax = Transaction::with(['user', 'transaksiDetail.ticketCategory', 'event'])->where('event_id', $data->event_id)->where('status_payment', 'settlement')->sum('internet_tax');
+        $total_payment = Transaction::with(['user', 'transaksiDetail.ticketCategory', 'event'])->where('event_id', $data->event_id)->where('status_payment', 'settlement')->sum('total_payment');
+
+        return view('backend.transaction.show-transaction', compact('slug', 'total_payment', 'tax'));
     }
 }

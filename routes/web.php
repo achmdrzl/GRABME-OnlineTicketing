@@ -131,10 +131,10 @@ Route::group(['middleware' => ['role:admin|manager', 'auth']], function () {
     Route::post('/eventShow', EventController::class . '@eventGetData')->name('get.event.data');
 
     // Event Show
-    Route::get('/event/show/{id}', EventController::class . '@eventShow')->name('event.show');
+    Route::get('/event/show/{slug}', EventController::class . '@eventShow')->name('event.show');
 
     // Event Edit
-    Route::get('/event/edit/{id}', EventController::class . '@eventEdit')->name('event.edit');
+    Route::get('/event/edit/{slug}', EventController::class . '@eventEdit')->name('event.edit');
 
     // Event Update Status
     Route::post('/event/updateStatus', EventController::class . '@updateStatusEvent')->name('eventUpdate.status');
@@ -151,7 +151,7 @@ Route::group(['middleware' => ['role:admin|manager', 'auth']], function () {
 
     // get transaction data
     Route::post('/transactionGetData', TransactionController::class . '@transactionGetData')->name('get.transaction.data');
-    Route::get('/transactionShow/{id}', TransactionController::class . '@transactionShow')->name('transaction.show');
+    Route::get('/transactionShow/{slug}', TransactionController::class . '@transactionShow')->name('transaction.show');
 
     // get detail transaction
     Route::post('/detail-transaction', TransactionController::class . '@getDetailTransaction')->name('show.transaction');

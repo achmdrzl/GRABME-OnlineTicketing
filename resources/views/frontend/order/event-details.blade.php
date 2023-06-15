@@ -62,7 +62,8 @@
                                             <img src="{{ asset('frontend/assets/images/talent.png') }}" class=""
                                                 alt="" width="80">
                                             <div class="" style="margin-top:30px">
-                                                <h6 class="mb-0"><strong>{{ ucfirst($item->event_talent_name == null ? 'TBA' : $item->event_talent_name) }}</strong>
+                                                <h6 class="mb-0">
+                                                    <strong>{{ ucfirst($item->event_talent_name == null ? 'TBA' : $item->event_talent_name) }}</strong>
                                                 </h6>
                                                 <p class="mb-0"></p>
                                             </div>
@@ -216,7 +217,7 @@
                     },
                     dataType: "JSON",
                     success: function(response) {
-                        
+
                         // save while on array data
                         var index = data.findIndex(function(obj) {
                             console.log(obj.id)

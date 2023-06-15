@@ -168,42 +168,42 @@
             });
 
             $('body').on('click', '#event-show', function() {
-                var event_id = $(this).attr('data-id');
-                console.log(event_id)
+                var slug = $(this).attr('data-id');
+                console.log(slug)
                 $.ajax({
                     type: "POST",
                     url: "{{ route('get.event.data') }}",
                     data: {
-                        event_id: event_id
+                        slug: slug
                     },
                     dataType: "JSON",
                     success: function(response) {
                         console.log(response)
-                        window.open('/event/show/' + response.event_id);
+                        window.open('/event/show/' + response.slug);
                     }
                 });
             });
 
             $('body').on('click', '#event-edit', function() {
-                var event_id = $(this).attr('data-id');
-                console.log(event_id)
+                var slug = $(this).attr('data-id');
+                console.log(slug)
                 $.ajax({
                     type: "POST",
                     url: "{{ route('get.event.data') }}",
                     data: {
-                        event_id: event_id
+                        slug: slug
                     },
                     dataType: "JSON",
                     success: function(response) {
                         console.log(response)
-                        window.open('/event/edit/' + response.event_id);
+                        window.open('/event/edit/' + response.slug);
                     }
                 });
             });
 
             // Update Status Event.
             $('body').on('click', '#event-update', function() {
-                var event_id = $(this).attr('data-id');
+                var slug = $(this).attr('data-id');
                 const sel = document.getElementById("event_status");
                 $('#submitBtn').val("update status event");
                 $('#modalHeading').html("UPDATE EVENT STATUS");
@@ -212,7 +212,7 @@
                     type: "POST",
                     url: "{{ route('get.event.data') }}",
                     data: {
-                        event_id: event_id
+                        slug: slug
                     },
                     dataType: "JSON",
                     success: function(response) {

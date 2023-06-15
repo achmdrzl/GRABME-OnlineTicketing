@@ -51,11 +51,11 @@ class EventController extends Controller
                 })
                 ->addColumn('action', function ($event) {
 
-                    $btn = '<button id="event-edit" data-id="' . $event->event_id . '" title="Edit" class="btn btn-secondary btn-sm edit-event ms-1"><i class="mdi mdi-pencil-box-outline"></i></button>';
+                    $btn = '<button id="event-edit" data-id="' . $event->slug . '" title="Edit" class="btn btn-secondary btn-sm edit-event ms-1"><i class="mdi mdi-pencil-box-outline"></i></button>';
 
-                    $btn = $btn . '<button id="event-update" data-id="' . $event->event_id . '" class="btn btn-success btn-sm ms-1" title="Update Status Event"><i class="mdi mdi-pencil"></i></button>';
+                    $btn = $btn . '<button id="event-update" data-id="' . $event->slug . '" class="btn btn-success btn-sm ms-1" title="Update Status Event"><i class="mdi mdi-pencil"></i></button>';
 
-                    $btn = $btn . '<button id="event-show" data-id="' . $event->event_id . '" class="btn btn-primary btn-sm ms-1" title="Show"><i class="mdi mdi-eye"></i></button>';
+                    $btn = $btn . '<button id="event-show" data-id="' . $event->slug . '" class="btn btn-primary btn-sm ms-1" title="Show"><i class="mdi mdi-eye"></i></button>';
 
                     return $btn;
                 })
@@ -102,17 +102,17 @@ class EventController extends Controller
             // Store the original image
             $path = Storage::putFileAs('public/event_poster', $poster, $event_poster);
 
-            // Open the stored image
-            $image = Image::make(storage_path('app/' . $path));
+            // // Open the stored image
+            // $image = Image::make(storage_path('app/' . $path));
 
-            // Resize the image to the desired dimensions
-            $image->resize(1917, 1027, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
+            // // Resize the image to the desired dimensions
+            // $image->resize(1917, 1027, function ($constraint) {
+            //     $constraint->aspectRatio();
+            //     $constraint->upsize();
+            // });
 
-            // Save the resized image
-            $image->save(storage_path('app/' . $path));
+            // // Save the resized image
+            // $image->save(storage_path('app/' . $path));
 
             $event = Events::updateOrCreate([
                 'event_id' => $request->event_id
@@ -272,17 +272,17 @@ class EventController extends Controller
             // Store the original image
             $path = Storage::putFileAs('public/event_poster', $poster, $event_poster);
 
-            // Open the stored image
-            $image = Image::make(storage_path('app/' . $path));
+            // // Open the stored image
+            // $image = Image::make(storage_path('app/' . $path));
 
-            // Resize the image to the desired dimensions
-            $image->resize(1917, 1027, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
+            // // Resize the image to the desired dimensions
+            // $image->resize(1917, 1027, function ($constraint) {
+            //     $constraint->aspectRatio();
+            //     $constraint->upsize();
+            // });
 
-            // Save the resized image
-            $image->save(storage_path('app/' . $path));
+            // // Save the resized image
+            // $image->save(storage_path('app/' . $path));
 
             $event = Events::updateOrCreate([
                 'event_id' => $request->event_id
@@ -409,21 +409,21 @@ class EventController extends Controller
 
     public function eventGetData(Request $request)
     {
-        $event = Events::with(['eventTalent', 'ticketCategory'])->where('event_id', $request->event_id)->first();
+        $event = Events::with(['eventTalent', 'ticketCategory'])->where('slug', $request->slug)->first();
 
         return response()->json($event);
     }
 
-    public function eventShow($id, Request $request)
+    public function eventShow($slug, Request $request)
     {
-        $event = Events::with(['eventTalent', 'ticketCategory'])->where('event_id', $id)->first();
+        $event = Events::with(['eventTalent', 'ticketCategory'])->where('slug', $slug)->first();
 
         return view('backend.events.show-event', compact('event'));
     }
 
-    public function eventEdit($id)
+    public function eventEdit($slug)
     {
-        $event = Events::with(['eventTalent', 'ticketCategory'])->where('event_id', $id)->first();
+        $event = Events::with(['eventTalent', 'ticketCategory'])->where('slug', $slug)->first();
 
         return view('backend.events.edit-event', compact('event'));
     }

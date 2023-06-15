@@ -39,7 +39,7 @@ class UserRole extends Seeder
             $admin = User::create(array_merge([
                 'email' => 'admin@gmail.com',
                 'name' => 'Admin',
-                'role' => 'mdmin',
+                'role' => 'admin',
                 'phone_number' => '081242067383',
             ], $default_user_value));
     
