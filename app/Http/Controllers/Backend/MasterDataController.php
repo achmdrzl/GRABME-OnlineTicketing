@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
@@ -98,14 +99,14 @@ class MasterDataController extends Controller
             'email' => $request->email,
             'phone_number' => $request->phone_number,
             'role' => $request->role,
-            'password' => $request->password,
+            'password' => Hash::make($request->password),
         ]);
 
         $profile = Profile::create([
             'user_id' => $user->user_id
         ]);
 
-        $user->assignRole($request->role);
+        $user->syncRoles($request->role);
 
         //return response
         return response()->json([

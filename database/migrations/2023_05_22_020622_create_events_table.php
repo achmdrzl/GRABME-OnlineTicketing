@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id('event_id');
+            $table->string('slug')->unique();
             $table->string('event_name');
             $table->dateTime('date_held');
             $table->text('event_description');
             $table->string('location_held');
-            $table->enum('event_status', ['publish', 'archive', 'finish'])->default('publish');
+            $table->string('event_poster');
+            $table->enum('event_status', ['publish', 'listing', 'archive', 'finish'])->default('listing');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
             $table->timestamps();

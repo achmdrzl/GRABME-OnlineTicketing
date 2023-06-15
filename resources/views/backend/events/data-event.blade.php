@@ -29,12 +29,13 @@
                         <h6 class="card-title">Data Events</h6>
                         <p class="text-muted mb-3">Detail from data events.</p>
                         <div class="table-responsive">
-                            <table id="user-datatable" class="table w-100">
+                            <table id="event-datatable" class="table w-100">
                                 <thead>
                                     <tr>
                                         <th>No</th>
                                         <th>Name Event</th>
                                         <th>Date Held</th>
+                                        <th>Event Location</th>
                                         <th>Status Event</th>
                                         <th>Action</th>
                                     </tr>
@@ -49,6 +50,65 @@
         </div>
     </div>
 @endsection
+
+{{-- Modal Update Status --}}
+<div class="modal fade" id="updateStatus" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalHeading"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display: none;"
+                    style="color: red">
+                </div>
+                <input type="hidden" id="event_id" name="event_id">
+                <label for="" class="form-label">Select Status :</label>
+                <select name="event_status" id="event_status" class="form-select">
+                    <option value="listing">Listing</option>
+                    <option value="archive">Archive</option>
+                    <option value="publish">Publish</option>
+                    <option value="finish">Finish</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="submitStatus">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- Modal Update Status --}}
+<div class="modal fade bd-example-modal-lg" id="updateStatusCategory" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalHeading"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-responsive-lg" id="table_category" width="100%">
+                    <thead>
+                        <th>Category No</th>
+                        <th>Category Name</th>
+                        <th>Category Price</th>
+                        <th>Category Quota</th>
+                        <th>Category Status</th>
+                        <th>Action</th>
+                    </thead>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="submitStatus">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @push('script-alt')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
@@ -74,25 +134,29 @@
             });
 
             // Rendering Table
-            var table = $('#user-datatable').DataTable({
+            var table = $('#event-datatable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('user.index') }}",
+                ajax: "{{ route('event.index') }}",
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex'
                     },
                     {
-                        data: 'name',
-                        name: 'name'
+                        data: 'event_name',
+                        name: 'event_name'
                     },
                     {
-                        data: 'email',
-                        name: 'email'
+                        data: 'date_held',
+                        name: 'date_held'
                     },
                     {
-                        data: 'status_akun',
-                        name: 'status_akun'
+                        data: 'event_location',
+                        name: 'event_location'
+                    },
+                    {
+                        data: 'event_status',
+                        name: 'event_status'
                     },
                     {
                         data: 'action',
@@ -103,46 +167,79 @@
                 ]
             });
 
-            // $('#gambar_lap').change(function() {
-            //     let reader = new FileReader();
-            //     reader.onload = (e) => {
-            //         $('#image_preview').attr('src', e.target.result);
-            //     }
-            //     reader.readAsDataURL(this.files[0]);
-            // })
-
-            // Create Data User.
-            $('.user-create').click(function() {
-                $('.alert').hide();
-                $('#submitBtnUser').val(".");
-                $('#userForm').trigger("reset");
-                $('#userHeading').html("ADD NEW USER");
-                $('#userModal').modal('show');
-                $('#user_id').val('');
-                $('#name').val('');
-                $('#email').val('');
-                $('#phone_number').val('');
-                $('#role').val('');
-                $('#password').val('');
-                $('#password_confirmation').val('');
+            $('body').on('click', '#event-show', function() {
+                var event_id = $(this).attr('data-id');
+                console.log(event_id)
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('get.event.data') }}",
+                    data: {
+                        event_id: event_id
+                    },
+                    dataType: "JSON",
+                    success: function(response) {
+                        console.log(response)
+                        window.open('/event/show/' + response.event_id);
+                    }
+                });
             });
 
-            // Store or Update Data User
-            $('#submitBtnUser').click(function(e) {
+            $('body').on('click', '#event-edit', function() {
+                var event_id = $(this).attr('data-id');
+                console.log(event_id)
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('get.event.data') }}",
+                    data: {
+                        event_id: event_id
+                    },
+                    dataType: "JSON",
+                    success: function(response) {
+                        console.log(response)
+                        window.open('/event/edit/' + response.event_id);
+                    }
+                });
+            });
+
+            // Update Status Event.
+            $('body').on('click', '#event-update', function() {
+                var event_id = $(this).attr('data-id');
+                const sel = document.getElementById("event_status");
+                $('#submitBtn').val("update status event");
+                $('#modalHeading').html("UPDATE EVENT STATUS");
+                $('#updateStatus').modal('show');
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('get.event.data') }}",
+                    data: {
+                        event_id: event_id
+                    },
+                    dataType: "JSON",
+                    success: function(response) {
+                        $('#event_id').val(response.event_id)
+                        $('#event_status').val(response.event_status)
+                    }
+                });
+                // sel.addEventListener("change", () => {
+                //     let selectedOption = sel.options[sel.selectedIndex];
+                //     // console.log(selectedOption); // get the element
+                //     // console.log(selectedOption.value); //get the value attribute
+                //     // console.log(selectedOption.innerText); // get the inner text
+                //     var evet_status = selectedOption.value
+                // });
+            });
+
+            // Update Status Event
+            $('#submitStatus').click(function(e) {
                 e.preventDefault();
                 $(this).html('Sending..');
 
                 var formData = new FormData();
-                formData.append('user_id', $("#user_id").val());
-                formData.append('name', $("#name").val());
-                formData.append('email', $("#email").val());
-                formData.append('phone_number', $("#phone_number").val());
-                formData.append('role', $("#role").val());
-                formData.append('password', $("#password").val());
-                formData.append('password_confirmation', $("#password_confirmation").val());
+                formData.append('event_id', $("#event_id").val());
+                formData.append('event_status', $("#event_status").val());
 
                 $.ajax({
-                    url: "{{ route('user.store') }}",
+                    url: "{{ route('eventUpdate.status') }}",
                     data: formData,
                     type: "POST",
                     processData: false,
@@ -159,7 +256,7 @@
                                 $('.alert-danger').append('<strong><li>' + value +
                                     '</li></strong>');
                             });
-                            $('#submitBtnUser').html('Simpan');
+                            $('#submitStatus').html('Simpan');
                         } else {
                             $('.alert-danger').hide();
                             const Toast = Swal.mixin({
@@ -175,107 +272,15 @@
                                 title: `${response.message}`,
                             })
 
-                            $('#userForm').trigger("reset");
-                            $('#submitBtnUser').html('Simpan');
-                            $('#userModal').modal('hide');
+                            $('#submitStatus').html('Simpan');
+                            $('#updateStatus').modal('hide');
                             table.draw();
                         }
                     }
                 });
             });
 
-            // Edit Data User
-            $('body').on('click', '#user-edit', function() {
-                var user_id = $(this).attr('data-id');
-                $('.alert').hide();
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route('user.selected') }}",
-                    data: {
-                        user_id: user_id
-                    },
-                    dataType: "json",
-                    success: function(response) {
-                        console.log(response)
-                        $('#submitBtnUser').val("user-edit");
-                        $('#userForm').trigger("reset");
-                        $('#userHeading').html("EDIT DATA USER");
-                        $('#userModal').modal('show');
-                        $('#user_id').val(response.user_id);
-                        $('#name').val(response.name);
-                        $('#email').val(response.email);
-                        $('#phone_number').val(response.phone_number);
-                        $('#role').val(response.role);
-                        $('#password').val('');
-                        $('#password_confirmation').val('');
-                    }
-                });
-            });
-
-            // Arsipkan Data User
-            $('body').on('click', '.user-delete', function() {
-
-                const swalWithBootstrapButtons = Swal.mixin({
-                    customClass: {
-                        confirmButton: "btn btn-success",
-                        cancelButton: "btn btn-danger me-2",
-                    },
-                    buttonsStyling: false,
-
-                });
-
-                var user_id = $(this).attr('data-id');
-                if ($('#user-' + user_id).hasClass("aktif")) {
-                    var title = "Do you want to disable, this data?"
-                    var text = "This data will be archived!"
-                } else {
-                    var title = "Do you want to activate, this data?"
-                    var text = "This data will be displayed!"
-                }
-
-                swalWithBootstrapButtons
-                    .fire({
-                        title: title,
-                        text: text,
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonClass: "me-2",
-                        cancelButtonText: "Tidak",
-                        confirmButtonText: "Ya",
-                        reverseButtons: true,
-                    })
-                    .then((result) => {
-                        if (result.value) {
-                            $.ajax({
-                                type: "POST",
-                                url: "{{ route('user.destroy') }}",
-                                data: {
-                                    user_id: user_id,
-                                },
-                                dataType: "json",
-                                success: function(response) {
-                                    const Toast = Swal.mixin({
-                                        toast: true,
-                                        position: 'top-end',
-                                        showConfirmButton: false,
-                                        timer: 3000,
-                                        timerProgressBar: true,
-                                    });
-
-                                    Toast.fire({
-                                        icon: 'success',
-                                        title: `${response.status}`,
-                                    })
-                                    table.draw();
-                                }
-                            });
-                        } else {
-                            Swal.fire("Cancel!", "Perintah dibatalkan!", "error");
-                        }
-                    });
-
-            });
-
+            // Update Status Category
         });
     </script>
 @endpush

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--favicon-->
     <link rel="icon" href="{{ asset('frontend/assets/images/favicon-32x32.webp') }}')}}" type="image/webp" />
-
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <!-- CSS files -->
     <link href="{{ asset('frontend/assets/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500;600&display=swap" rel="stylesheet">
@@ -16,9 +16,13 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/plugins/slick/slick.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/plugins/slick/slick-theme.css') }}" />
 
+    <!-- Plugin sweet alert -->
+    <link rel="stylesheet" href="{{ asset('backend/assets/vendors/sweetalert2/sweetalert2.min.css') }}" />
+    <!-- End of Custom plugin -->
+
     <link href="{{ asset('frontend/assets/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('frontend/assets/css/dark-theme.css') }}" rel="stylesheet">
-
+    @stack('style-alt')
     <title>GrabMe - Ticketing</title>
 </head>
 
@@ -32,18 +36,42 @@
     <!--end page content-->
 
 
+    <!--subscribe banner-->
+    <section class="product-thumb-slider subscribe-banner p-5">
+        <div class="row">
+            <div class="col-12 col-lg-6 mx-auto">
+                <div class="text-center">
+                    <h3 class="mb-0 fw-bold text-white">Ready to Create Event With Us?</h3>
+                    <p class="mb-0 fw-bold text-white">Tell us about your upcoming event and we’ll make your event become awesome.</p>
+                    {{-- <div class="mt-3">
+                        <input type="text" class="form-control form-control-lg bubscribe-control rounded-0 px-5 py-3"
+                            placeholder="Enter your email">
+                    </div> --}}
+                    <div class="mt-3 d-grid">
+                        <button type="button"
+                            class="btn btn-lg btn-ecomm bubscribe-button px-5 py-3">Learn More About Us</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--subscribe banner-->
+
     <!--start footer-->
     <section class="footer-section bg-section-2 section-padding">
         <div class="container">
             <div class="row row-cols-1 row-cols-lg-4 g-4">
                 <div class="col">
                     <div class="footer-widget-6">
-                        <img src="{{ asset('frontend/assets/images/logo.webp') }}" class="logo-img mb-3"
+                        <img src="{{ asset('frontend/assets/images/grabme.png') }}" class="logo-img mb-3"
                             alt="">
                         <h5 class="mb-3 fw-bold">About Us</h5>
-                        <p class="mb-2">There are many variations of passages of Lorem Ipsum available, but the
-                            majority have suffered alteration in some form, by injected humour, or randomised words
-                            which don't look even slightly believable.</p>
+                        <p class="mb-2">GrabMe is an online ticket purchasing service that offers a convenient and
+                            efficient platform for users to search, select, and buy tickets for a wide range of events
+                            and concerts. It provides comprehensive event information, secure payment options,
+                            electronic ticket delivery, and responsive customer service. With GrabMe, users can easily
+                            access and enjoy their favorite events without the hassle of physical ticket purchases,
+                            making the process of attending concerts and events more convenient and enjoyable.</p>
 
                         <a class="link-dark" href="javascript:;">Read More</a>
                     </div>
@@ -52,13 +80,8 @@
                     <div class="footer-widget-7">
                         <h5 class="mb-3 fw-bold">Explore</h5>
                         <ul class="widget-link list-unstyled">
-                            <li><a href="javascript:;">Fashion</a></li>
-                            <li><a href="javascript:;">Women</a></li>
-                            <li><a href="javascript:;">Furniture</a></li>
-                            <li><a href="javascript:;">Shoes</a></li>
-                            <li><a href="javascript:;">Topwear</a></li>
-                            <li><a href="javascript:;">Brands</a></li>
-                            <li><a href="javascript:;">Kids</a></li>
+                            <li><a href="javascript:;">Event</a></li>
+                            <li><a href="javascript:;">Concert</a></li>
                         </ul>
                     </div>
                 </div>
@@ -87,11 +110,11 @@
                         </div>
                         <div class="mb-3 mt-3">
                             <h5 class="mb-0 fw-bold">Support</h5>
-                            <p class="mb-0 text-muted">support@example.com</p>
+                            <p class="mb-0 text-muted">grabme.co@gmail.com</p>
                         </div>
                         <div class="">
                             <h5 class="mb-0 fw-bold">Toll Free</h5>
-                            <p class="mb-0 text-muted">1800- 8xx 2xx</p>
+                            <p class="mb-0 text-muted">0000-0000-0000</p>
                         </div>
                     </div>
                 </div>
@@ -127,7 +150,7 @@
     <!--end footer-->
 
     <footer class="footer-strip text-center py-3 bg-section-2 border-top positon-absolute bottom-0">
-        <p class="mb-0 text-muted">© 2022. www.example.com | All rights reserved.</p>
+        <p class="mb-0 text-muted">© 2023. grabme.co@gmail.com | All rights reserved.</p>
     </footer>
 
 
@@ -294,13 +317,16 @@
 
 
     <!-- JavaScript files -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
     <script src="{{ asset('frontend/assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/plugins/slick/slick.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/main.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/index.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/loader.js') }}"></script>
-
+    <script src="{{ asset('backend/assets/vendors/sweetalert2/sweetalert2.min.js') }}"></script>
+    @stack('script-alt')
 </body>
 
 </html>

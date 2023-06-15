@@ -2,16 +2,6 @@
 
 @push('style-alt')
     <!-- Plugin css for this page -->
-    <link rel="stylesheet" href="{{ asset('backend/assets/vendors/select2/select2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/assets/vendors/jquery-tags-input/jquery.tagsinput.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/assets/vendors/dropzone/dropzone.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/assets/vendors/dropify/dist/dropify.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/assets/vendors/pickr/themes/classic.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/assets/vendors/font-awesome/css/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/assets/vendors/flatpickr/flatpickr.min.css') }}">
-    <!-- End plugin css for this page -->
-
-    <!-- Plugin css for this page -->
     <link rel="stylesheet" href="{{ asset('backend/assets/vendors/easymde/easymde.min.css') }}">
     <!-- End plugin css for this page -->
 @endpush
@@ -35,8 +25,9 @@
                         <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display: none;"
                             style="color: red">
                         </div>
-                        <form class="forms-sample">
+                        <form class="forms-sample" id="eventForm">
                             <div class="row mb-4">
+                                <input type="hidden" name="event_id" id="event_id">
                                 <div class="col">
                                     <label class="form-label">Name Event:</label>
                                     <input class="form-control mb-4 mb-md-0" type="text" id="event_name"
@@ -51,8 +42,7 @@
                             <div class="row mb-2">
                                 <div class="col">
                                     <label class="form-label">Event Poster:</label>
-                                    <input class="form-control" type="file" id="event_poster"
-                                        name="event_poster" />
+                                    <input class="form-control" type="file" id="event_poster" name="event_poster" />
                                 </div>
                             </div>
                             <div class="row">
@@ -80,25 +70,26 @@
                                 <hr>
                                 <div class="ticket_wrapper">
                                     <div class="row">
+                                        <input type="hidden" name="ticket_category_id[]" id="ticket_category_id">
                                         <div class="col-md-4">
                                             <div class="input-group mb-3">
                                                 <span class="input-group-text" id="basic-addon2">Category Name</span>
-                                                <input type="text" id="category_name" class="form-control"
-                                                    name="category_name[]" />
+                                                <input type="text" id="ticket_category_name" class="form-control"
+                                                    name="ticket_category_name[]" />
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="input-group mb-3">
                                                 <span class="input-group-text" id="basic-addon2">Ticket Pricing</span>
-                                                <input type="number" id="ticket_price" class="form-control"
-                                                    name="ticket_price[]" />
+                                                <input type="number" id="ticket_category_price" class="form-control"
+                                                    name="ticket_category_price[]" />
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="input-group mb-3">
                                                 <span class="input-group-text" id="basic-addon2">Ticket Quota</span>
-                                                <input type="number" id="ticket_quota" class="form-control"
-                                                    name="ticket_quota[]" />
+                                                <input type="number" id="ticket_category_quota" class="form-control"
+                                                    name="ticket_category_quota[]" />
                                             </div>
                                         </div>
                                         <div class="col-md-1">
@@ -114,18 +105,19 @@
                                 <hr>
                                 <div class="talent_wrapper">
                                     <div class="row">
+                                        <input type="hidden" name="event_talent_id[]" id="event_talent_id">
                                         <div class="col-md-7">
                                             <div class="input-group mb-3">
                                                 <span class="input-group-text" id="basic-addon2">Talent Name</span>
-                                                <input type="text" id="talent_name" class="form-control"
-                                                    name="talent_name[]" />
+                                                <input type="text" id="event_talent_name" class="form-control"
+                                                    name="event_talent_name[]" />
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="input-group mb-3">
                                                 <span class="input-group-text" id="basic-addon2"></span>
-                                                <input type="file" id="talent_photo" class="form-control"
-                                                    name="talent_photo[]" />
+                                                <input type="file" id="event_talent_img" class="form-control"
+                                                    name="event_talent_img[]" />
                                             </div>
                                         </div>
                                         <div class="col-md-1">
@@ -138,7 +130,7 @@
                             <hr>
                             <div class="row mb-3 text-center align-items-center">
                                 <div class="col-md-12">
-                                    <button class="btn btn-primary w-25" id="submitBtnEvent">Submit</button>
+                                    <button class="btn btn-primary w-25" id="submitBtnEvent">Save</button>
                                 </div>
                             </div>
                         </form>
@@ -152,30 +144,11 @@
 
 @push('script-alt')
     <!-- Plugin js for this page -->
-    <script src="{{ asset('backend/assets/vendors/jquery-validation/jquery.validate.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/vendors/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/vendors/inputmask/jquery.inputmask.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/vendors/select2/select2.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/vendors/typeahead.js/typeahead.bundle.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/vendors/jquery-tags-input/jquery.tagsinput.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/vendors/dropzone/dropzone.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/vendors/dropify/dist/dropify.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/vendors/pickr/pickr.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/vendors/moment/moment.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/vendors/flatpickr/flatpickr.min.js') }}"></script>
-    <!-- End plugin js for this page -->
-
-    <!-- Plugin js for this page -->
     <script src="{{ asset('backend/assets/vendors/tinymce/tinymce.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/vendors/easymde/easymde.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/vendors/ace-builds/src-min/ace.js') }}"></script>
-    <script src="{{ asset('backend/assets/vendors/ace-builds/src-min/theme-chaos.js') }}"></script>
     <!-- End plugin js for this page -->
 
     <!-- Custom js for this page -->
     <script src="{{ asset('backend/assets/js/tinymce.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/easymde.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/ace.js') }}"></script>
     <!-- End custom js for this page -->
 
     <script>
@@ -203,25 +176,26 @@
             var wrapperTicket = $('.ticket_wrapper'); //Input field wrapper
             var fieldHTMLTicket =
                 `<div class="row">
+                    <input type="hidden" name="ticket_category_id[]" id="ticket_category_id">
                     <div class="col-md-4">
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon2">Category Name</span>
-                            <input type="text" id="category_name" class="form-control"
-                                name="category_name[]" />
+                            <input type="text" id="ticket_category_name" class="form-control"
+                                name="ticket_category_name[]" />
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon2">Ticket Pricing</span>
-                            <input type="number" id="ticket_price" class="form-control"
-                                name="ticket_price[]"/>
+                            <input type="number" id="ticket_category_price" class="form-control"
+                                name="ticket_category_price[]"/>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon2">Ticket Quota</span>
-                            <input type="number" id="ticket_quota" class="form-control"
-                                name="ticket_quota[]"/>
+                            <input type="number" id="ticket_category_quota" class="form-control"
+                                name="ticket_category_quota[]"/>
                         </div>
                     </div>
                     <div class="col-md-1">
@@ -267,18 +241,19 @@
             var wrapperTalent = $('.talent_wrapper'); //Input field wrapper
             var fieldHTMLTalent =
                 `<div class="row">
+                    <input type="hidden" name="event_talent_id[]" id="event_talent_id">
                     <div class="col-md-7">
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon2">Talent Name</span>
-                            <input type="text" id="talent_name" class="form-control"
-                                name="talent_name[]" />
+                            <input type="text" id="event_talent_name" class="form-control"
+                                name="event_talent_name[]" />
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon2"></span>
-                            <input type="file" id="talent_photo" class="form-control"
-                                name="talent_photo[]" />
+                            <input type="file" id="event_talent_img" class="form-control"
+                                name="event_talent_img[]" />
                         </div>
                     </div>
                     <div class="col-md-1">
@@ -324,21 +299,7 @@
                 e.preventDefault();
                 $(this).html('Sending..');
 
-                // var img = document.getElementById('event_poster');
                 tinyMCE.triggerSave();
-                // var formData = new FormData();
-                // formData.append('event_name', $("#event_name").val());
-                // formData.append('date_held', $("#date_held").val());
-                // formData.append('event_poster', img.files[0]);
-                // formData.append('event_description', $("#event_description").val());
-                // formData.append('location_held', $("#location_held").val());
-
-                // let TotalFiles = $('#temuan_lampiran')[0].files.length; //Total files
-                // let files = $('#temuan_lampiran')[0];
-                // for (let i = 0; i < TotalFiles; i++) {
-                //     formData.append('temuan_lampiran' + i, files.files[i]);
-                // }
-                // formData.append('TotalFiles', TotalFiles);
 
                 $.ajax({
                     url: "{{ route('event.store') }}",
@@ -351,14 +312,14 @@
                     success: function(response) {
                         console.log(response)
                         if (response.errors) {
-                            $('#update-profile').html('Store Data User');
+                            $('#update-profile').html('Store Data Event');
                             $('.alert').html('');
                             $.each(response.errors, function(key, value) {
                                 $('.alert-danger').show();
                                 $('.alert-danger').append('<strong><li>' + value +
                                     '</li></strong>');
                             });
-                            $('#submitBtnUser').html('Simpan');
+                            $('#submitBtnEvent').html('Save');
                         } else {
                             $('.alert-danger').hide();
                             const Toast = Swal.mixin({
@@ -375,15 +336,13 @@
                             })
 
                             $('#userForm').trigger("reset");
-                            $('#submitBtnUser').html('Simpan');
-                            $('#userModal').modal('hide');
-                            table.draw();
+                            $('#submitBtnEvent').html('Save');
+                            window.location = '{{ route('event.index') }}'
+
                         }
                     }
                 });
             });
-
-
         });
     </script>
 @endpush

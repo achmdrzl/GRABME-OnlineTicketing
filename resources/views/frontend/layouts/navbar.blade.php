@@ -1,10 +1,9 @@
     <!--start top header-->
     <header class="top-header">
         <nav class="navbar navbar-expand-xl w-100 sticky-top navbar-dark container gap-3">
-            <a class="navbar-brand d-none d-xl-inline" href="index.html"><img
+            <a class="navbar-brand d-none d-xl-inline" href="{{ route('index') }}"><img
                     src="{{ asset('frontend/assets/images/grabme.png') }}" class="logo-img" alt=""></a>
-            <a class="mobile-menu-btn d-inline d-xl-none" href="javascript:;" data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasNavbar">
+            <a class="mobile-menu-btn d-inline d-xl-none" href="{{ route('index') }}">
                 <img src="{{ asset('frontend/assets/images/grabme.png') }}" class="logo-img" alt="">
                 {{-- <i class="bi bi-list"></i> --}}
             </a>
@@ -141,19 +140,16 @@
                 </div> --}}
             </div>
             <ul class="navbar-nav secondary-menu flex-row">
-                <li class="nav-item me-4">
+                <li class="nav-item me-3">
                     <a class="nav-link dark-mode-icon" href="javascript:;">
                         <div class="mode-icon">
                             <i class="bi bi-moon"></i>
                         </div>
                     </a>
                 </li>
-                <li class="nav-item me-4">
-                    <a class="nav-link" href="wishlist.html"><i class="bi bi-ticket-perforated"></i></a>
-                </li>
-                <li class="nav-item me-4">
+                {{-- <li class="nav-item me-4">
                     <a class="nav-link" href="wishlist.html"><i class="bi bi-cash-stack"></i></a>
-                </li>
+                </li> --}}
                 {{-- <li class="nav-item">
                     <a class="nav-link" href="wishlist.html"><i class="bi bi-suit-heart"></i></a>
                 </li> --}}
@@ -167,9 +163,18 @@
                     </a>
                 </li> --}}
                 <div class="divider"></div>
-                <li class="nav-item">
-                    <a class="nav-link" href="account-dashboard.html"><i class="bi bi-person-circle"></i></a>
+                @if(Auth::user() == true)
+                <li class="nav-item me-3">
+                    <a class="nav-link" href="{{ route('history.index') }}"><i class="bi bi-ticket-perforated"></i></a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('dashboard.user') }}"><i class="bi bi-person-circle"></i></a>
+                </li>
+                @else
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('login') }}" style="font-size: 15px;">Login/Register</a>
+                </li>
+                @endif
             </ul>
         </nav>
     </header>
