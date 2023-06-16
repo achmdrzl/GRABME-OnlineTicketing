@@ -35,7 +35,7 @@
                                 </div>
                             </div>
                             <div class="col">
-                                <img src="{{ asset('storage/event_poster/' . $event[$random1]->event_poster) }}"
+                                <img src="{{ asset('storage/public/event_poster/' . $event[$random1]->event_poster) }}"
                                     class="img-fluid" alt="...">
                             </div>
                         </div>
@@ -73,7 +73,7 @@
                                 </div>
                             </div>
                             <div class="col">
-                                <img src="{{ asset('storage/event_poster/' . $event[$random2]->event_poster) }}"
+                                <img src="{{ asset('storage/public/event_poster/' . $event[$random2]->event_poster) }}"
                                     class="img-fluid" alt="...">
                             </div>
                         </div>
@@ -93,7 +93,7 @@
                                 </div>
                             </div>
                             <div class="col">
-                                <img src="{{ asset('storage/event_poster/' . $event[$random3]->event_poster) }}"
+                                <img src="{{ asset('storage/public/event_poster/' . $event[$random3]->event_poster) }}"
                                     class="img-fluid" alt="...">
                             </div>
                         </div>
@@ -113,7 +113,7 @@
                                 </div>
                             </div>
                             <div class="col">
-                                <img src="{{ asset('storage/event_poster/' . $event[$random4]->event_poster) }}"
+                                <img src="{{ asset('storage/public/event_poster/' . $event[$random4]->event_poster) }}"
                                     class="img-fluid" alt="...">
                             </div>
                         </div>
@@ -133,7 +133,7 @@
                                 </div>
                             </div>
                             <div class="col">
-                                <img src="{{ asset('storage/event_poster/' . $event[$random5]->event_poster) }}"
+                                <img src="{{ asset('storage/public/event_poster/' . $event[$random5]->event_poster) }}"
                                     class="img-fluid" alt="...">
                             </div>
                         </div>
@@ -165,7 +165,7 @@
                         @foreach ($event as $item)
                             <div class="col">
                                 <div class="card">
-                                    <img src="{{ asset('storage/event_poster/' . $item->event_poster) }}"
+                                    <img src="{{ asset('storage/public/event_poster/' . $item->event_poster) }}"
                                         class="card-img-top rounded-0" alt="...">
                                     <div class="card-body">
                                         <div class="d-flex align-items-center gap-4">

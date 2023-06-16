@@ -113,8 +113,8 @@
                             <p class="mb-0 text-muted">grabme.co@gmail.com</p>
                         </div>
                         <div class="">
-                            <h5 class="mb-0 fw-bold">Toll Free</h5>
-                            <p class="mb-0 text-muted">0000-0000-0000</p>
+                            <h5 class="mb-0 fw-bold">Customer Service</h5>
+                            <p class="mb-0 text-muted">+62-0000-0000</p>
                         </div>
                     </div>
                 </div>

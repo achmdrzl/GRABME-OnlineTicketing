@@ -67,7 +67,7 @@
                                     <div class="d-flex flex-column flex-lg-row gap-3">
                                         <div class="product-img align-items-center text-center">
                                             <img class=""
-                                                src="{{ asset('storage/event_poster/' . $item->event->event_poster) }}"
+                                                src="{{ asset('storage/public/event_poster/' . $item->event->event_poster) }}"
                                                 width="250" alt="">
                                         </div>
                                         <div class="product-info flex-grow-1">

@@ -26,7 +26,7 @@
                     <div class="col-12 col-xl-8">
                         <div class="d-flex flex-column gap-4">
                             <div class="card rounded-0 border">
-                                <img src="{{ asset('storage/event_poster/' . $event->event_poster) }}"
+                                <img src="{{ asset('storage/public/event_poster/' . $event->event_poster) }}"
                                     class="card-img-top rounded-0 mb-3" alt="...">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center gap-4">

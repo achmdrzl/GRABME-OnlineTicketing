@@ -60,7 +60,7 @@
                             <div class="row">
                                 <div class="col-md-12 image-responsive align-items-center text-center">
                                     <img id="preview_poster" class="img-fluid"
-                                        src="{{ asset('storage/event_poster/' . $event->event_poster) }}" alt="">
+                                        src="{{ asset('storage/public/event_poster/' . $event->event_poster) }}" alt="">
                                 </div>
                             </div>
                             <hr>
